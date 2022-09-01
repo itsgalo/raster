@@ -1,13 +1,155 @@
-<!DOCTYPE html><html lang="en"><head>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
     <link rel="stylesheet" type="text/css" href="skeleton.css">
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>RASTER by itsgalo</title>
   </head>
   <body>
-    <div id="message"><a href="#" id="lnk"></a></div>
-    <div>
-    <h1 class="center">COMING SOON...</h1>
-    </select>
+    <div class="container">
+      <div class="row">
+        <div id="header" class="col-12 outline">
+          <h1>RASTER</h1>
+          <p>A generative art program built with p5js and glsl shaders. Art Blocks Curated Collection.</p>
+        </div>
+      </div>
+      <div id="nav" class="row">
+        <div id="prevs" class="col-2 center"><a href="#desc"><h1>[ABOUT]</h1></a></div>
+        <div id="prevs" class="col-2 center"><a href="#feats"><h1>[FEATURES]</h1></a></div>
+        <div id="prevs" class="col-2 center"><a href="#gif"><h1>[GIFS]</h1></a></div>
+        <div id="prevs" class="col-2 center"><a href="#prints"><h1>[PRINTS]</h1></a></div>
+        <div id="prevs" class="col-2 center"><a href="https://www.artblocks.io/project/341"><h1>[A/B]</h1></a></div>
+        <div id="prevs" class="col-2 center"><a href="https://opensea.io/collection/raster-by-itsgalo"><h1>[O/S]</h1></a></div>
+      </div>
+      <div class="row">
+        <div id="prevs" class="col-3 center"><img src="https://artblocks-artists-staging.s3.amazonaws.com/234000088.png"/><h2>TEST MINT #88</h2></div>
+        <div id="prevs" class="col-3 center"><img src="https://artblocks-artists-staging.s3.amazonaws.com/234000080.png"/><h2>TEST MINT #80</h2></div>
+        <div id="prevs" class="col-3 center"><img src="https://artblocks-artists-staging.s3.amazonaws.com/234000069.png"/><h2>TEST MINT #69</h2></div>
+        <div id="prevs" class="col-3 center"><img src="https://artblocks-artists-staging.s3.amazonaws.com/234000014.png"/><h2>TEST MINT #14</h2></div>
+      </div>
+      <div class="row">
+        <div id="desc" class="col-12 outline">
+          <h1>ABOUT</h1>
+          <p>
+            [Concept]
+            <br><br>
+            RASTER is about the materiality of pixels and raster imagery. As opposed to vector representational techniques that rely on precise point to point relationships in space, rasterization structures visual information in a grid of discrete elements. This means that most images we see and interact with on a daily basis are made up of these finite pixel grids. An image’s materiality is revealed when you either try to scale it up or zoom into it. It can be further revealed when using post-processing effects such as blurring or sharpening; these processes analyze each pixel in relation to its neighboring pixels and modify them according to some rule. RASTER attempts to have a discourse around these phenomena in the context of generative art and procedurally produced imagery.
+            <br><br>
+            The project is also formally inspired by the color field paintings of Mark Rothko and Clyfford Still, artworks that are as much studies of color as they are gestural expressions.
+            <br><br>
+            [Process]
+            <br><br>
+            Sometime in early 2021, I became a bit obsessed with both dithering and the idea of a painting that would paint itself forever. This inspired a series of different projects made with Processing and a variety of techniques such as physics simulation, procedural animation, and recording mouse gestures. Rather than try to replicate the painterly effects of physical media, I also started to explore what a strictly digital painterliness would look and feel like. My speculation was that I needed to make the discrete pixel as present as possible. It eventually became evident that it was too computationally expensive to use particles and shapes to render the movement of brush strokes painting over and over, especially when having to update all the pixels on the canvas every frame. Then, I discovered shaders, which enable simultaneous access to all the pixels on the screen using the GPU. This was a game changer for the technique I was working on. Using shader feedback and simple noise algorithms, I could finally achieve things like real-time smearing and other fluid effects. These shaders form the basis of most of my current painting projects. RASTER builds on top of these shader painting techniques and is the most intricate program I have built using them so far.
+            <br><br>
+            [Structure]
+          </p>
+          <img src="/IMG/step1.png" class="col-4 padded"/>
+          <img src="/IMG/step2.png" class="col-4 padded"/>
+          <img src="/IMG/step3.png" class="col-4 padded"/>
+          <p>
+            RASTER begins with a grid of points (a 5x5 grid, randomly culled to either 24, 18, or 12 points). These points form the structure of the brush strokes. Instead of randomly distributing points on the canvas, the grid allows for an even distribution that will likely create a more harmonious composition. Each brush stroke is made by connecting two randomly selected points on this grid like patches on a modular synthesizer. This line is processed as a bezier curve with a randomized control point to achieve a curved stroke.
+            <img src="/IMG/diagram-sm.gif" class="padded"/>
+            To animate the gesture, I derived my own algorithm that takes an array of points and interpolates from one to the next and loops back to the first when it reaches the end. Points were then distributed along the brush stroke curve so the path could be animated from start to end. Some randomness was introduced into the points array to give the stroke some extra wiggle.
+            <br><br>
+            [Paint]
+            <br><br>
+            The painting effect is produced through a combination of techniques. The first is a custom soft brush made by generating an image object with a radial gradient and transparency. This is similar to how all paint programs produce a soft brush. This image is rendered and moved along the animated path to lay the paint down.
+          </p>
+          <img src="/IMG/step4.png" class="col-3 padded"/>
+          <img src="/IMG/step5.png" class="col-3 padded"/>
+          <img src="/IMG/step6.png" class="col-3 padded"/>
+          <img src="/IMG/step7.png" class="col-3 padded"/>
+          <p>
+            The second component is a simple feedback shader that takes a snapshot of the current total image and then shifts the UVs a little bit at a time, making the paint “bleed.” For this, it was crucial to play with different rates of feedback to get the effect just right. This shader also distorts the UVs through downscaling and other math to allow the colors to collect in different zones. This distortion works similar to a compound or prism lens, where light is filtered into distinct patches (an amazing illustration of this behavior in a physical way can be seen here: <a href="https://twitter.com/mathMakesArt/status/1369119239517376514?s=20&t=GZHEnxGC78gdKXCU9Ua8Uw">https://twitter.com/mathMakesArt/status/1369119239517376514?s=20&t=GZHEnxGC78gdKXCU9Ua8Uw</a>). The bulk of the project was tweaking the shader feedback distortion and brush transparency so that the image can gradually build up paint and then achieve a kind of saturated equilibrium, where the colors will keep on painting and the feedback keeps looping. I call this technique <span class="highlight">“pixel overpainting.”</span>
+            <br><br>
+            [Dither]
+            <br><br>
+            <img src="/IMG/RASTER-COLORS.png"/>
+            <br><br>
+            The last component of RASTER is the dithering shader. Dithering is crucial for the project as it engages the core idea of pixel to pixel relationships. Noisy dithering is applied as a layer on top of the feedback layer, which separates the colors into discrete patches and reduces the total color count. The resulting texture mimics a kind of color theory primer on visual interpretation (similar to print-based halftone effects) where color mixtures result from weaving together patches of pure hues.
+            <br><br>
+            Because dithering and the shader feedback rely on discrete pixel sizes and thresholds, the final animated image may have slight variances in the way the colors bleed and overall color density at different resolutions. The composition is scale-agnostic (it can be scaled up infinitely, theoretically), but as you add or decrease the number of pixels, it might behave slightly differently due to the shifting of the filter threshold between scaled pixels and UV coordinates (a nice explanation of the fickleness of filtering and scaling pixels with shaders can be found here: <a href="https://jorenjoestar.github.io/post/pixel_art_filtering/">https://jorenjoestar.github.io/post/pixel_art_filtering/</a>). It is best viewed at large resolutions on a desktop. Some GPUs may also render the image a bit differently due to floating point precision variation. Viewers are encouraged to reflect on this dimension of digital materiality and the overall subjectivity in contemporary computer graphics.
+            <br><br>
+            [Acknowledgements]
+            <br><br>
+            Thanks to Jeff Davis, Mad Pinney, Sarah Rossien, pxlq, and the entire Art Blocks team for the help, feedback, and support. Special thanks to fellow artists that aided and inspired the project along the way p1xelfool, Luis Fraguada, 0x3y3, Spogelmaskinen, ippsketch. Special shoutout to all my early collectors that supported me in the development of this work; it would not have been possible without the communities in (fx)hash, Hic et Nunc/Teia, and Objkt nor without open-source libraries like p5js and the glsl genius of Inigo Quilez, Ian McEwan, and Adam Ferriss. Finally, I’d like to thank my partner and my family without whom I wouldn’t be where I am.
+          </p>
+        </div>
+      </div>
+      <div id="feats" class="row">
+        <div class="col-12">
+          <h1>FEATURES</h1>
+          <div class="col-2 center"><img src="/IMG/library-sm.png"/><h2>library</h2></div>
+          <div class="col-1 center"><img src="/IMG/beach-sm.png"/><h2>beach</h2></div>
+          <div class="col-1 center"><img src="/IMG/airport-sm.png"/><h2>airport</h2></div>
+          <div class="col-1 center"><img src="/IMG/desert-sm.png"/><h2>desert</h2></div>
+          <div class="col-2 center"><img src="/IMG/garden-sm.png"/><h2>garden</h2></div>
+          <div class="col-1 center"><img src="/IMG/gallery-sm.png"/><h2>gallery</h2></div>
+          <div class="col-1 center"><img src="/IMG/museum-sm.png"/><h2>museum</h2></div>
+          <div class="col-1 center"><img src="/IMG/party-sm.png"/><h2>party</h2></div>
+          <div class="col-2 center"><img src="/IMG/lounge-sm.png"/><h2>lounge</h2></div>
+          <p>
+            <span class="highlight">Color Palettes</span> - There are 9 possible color palettes, named after distinct spaces in my memory. Though the colors are blended and eventually quantized through the painting process, the palette does set a kind of color temperature or mood for each piece. Each palette also has its own canvas color.
+            <br><br>
+            <span class="highlight">Margin</span> - Most compositions will have a margin, some rare ones will not.
+            <br><br>
+            <span class="highlight">Saturated Border</span> - Each color palette has a hidden color that may emerge as a border.
+            <br><br>
+            <span class="highlight">Warped Subivisions</span> - This is the first pass that controls the color pooling zones of the composition. With higher subdivisions, a clear warped grid is noticeable.
+            <br><br>
+            <span class="highlight">Feedback Resolution</span> - This controls the “pixelation” of the feedback shader. Lower values will produce larger rasterized or stepped chunks (sometimes even patchy artifacts). Higher values will result in smoother forms.
+            <br><br>
+            <span class="highlight">Chaos X and Chaos Y</span> - Directional secondary subdivisions that add more noisy curvature to the patches of color in the composition. The more chaos in either direction, the more turbulent the composition appears.
+            <br><br>
+            <span class="highlight">No. of Brushes</span>  - Total number of looping brushes on the painting. Fewer has the potential to result in more whitespace.
+          </p>
+        </div>
+      </div>
+      <div id="gif" class="row">
+        <div class="col-12 outline">
+          <h1>GIF TOOL</h1>
+          <img src="/IMG/RASTER0-sm.gif"/>
+          <p>
+            Use this tool to capture a seamless GIF loop of any invocation of RASTER from the drop-down list. By default, the tool outputs a 90-frame, 540x720px animation. This should be efficient enough for sharing on most social media (it also should be noted that the GIFs run at a faster frame rate than the live script). This tool works only on Desktop. 
+            <br><br>
+            INSTRUCTIONS: (1) Select an invocation from the list. (2) Click the generated hash above to open a scaled live instance of RASTER. (3) Let the animation run for at least 3-5 minutes to assure the composition is at its fully painted state. (4) Press ‘g’ to begin recording the loop. (5) Wait for the flashing recording text to disappear and your GIF file should automatically download or you should see a prompt to save the file.
+          </p>
+          <div class="center">
+            <div id="message" class="padded"><a href="#" id="lnk"></a></div>
+            <select name="token" id="tk" onchange="getHash(this.value);">
+              <option value="">Select</option>
+            </select>
+          </div>
+          <p>
+            <span class="highlight">Any collector that currently holds a RASTER token can request a higher resolution GIF or lossless looping video file that can be used to display across devices without having to run the live script. Please reach out to @itsgalo on Discord to arrange this.</span>
+          </p>
+        </div>
+      </div>
+      <div id="prints" class="row">
+        <div class="col-12">
+          <h1>PRINTS</h1>
+          <p>
+            Collectors currently holding a RASTER token are eligible to receive an archival, exhibition quality, giclée print of a single frame of their mint. If no frame is specified, the print will use the captured frame from the Art Blocks platform. Prints are archival pigment ink on 100% cotton rag 330gsm fine art media. Artwork will be 17”x22” with a 1” margin.
+            <br><br>
+            To request a print, please send a small processing/shipping fee of 30USDC (or ETH equivalent) for US-based orders or 60USDC (or ETH equivalent) for international orders to the artist’s Ethereum address. <span class="highlight">IMPORTANT: This transaction MUST come from the Ethereum address currently holding the token in order to verify ownership.</span> To request a print, please fill out and submit this form <span class="highlight">[not available yet]</span>
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div id="prevs" class="col-3 center"><img src="https://artblocks-artists-staging.s3.amazonaws.com/234000039.png"/><h2>TEST MINT #39</h2></div>
+        <div id="prevs" class="col-3 center"><img src="https://artblocks-artists-staging.s3.amazonaws.com/234000044.png"/><h2>TEST MINT #44</h2></div>
+        <div id="prevs" class="col-3 center"><img src="https://artblocks-artists-staging.s3.amazonaws.com/234000029.png"/><h2>TEST MINT #29</h2></div>
+        <div id="prevs" class="col-3 center"><img src="https://artblocks-artists-staging.s3.amazonaws.com/234000004.png"/><h2>TEST MINT #4</h2></div>
+      </div>
+      <div id="footer" class="row">
+        <div class="col-12 outline">
+          <p>
+            RASTER is a project by <a href="https://galocanizares.com">itsgalo (Galo Canizares)</a>. Creative Commons Attribution-NonCommercial 4.0 International license applies. 2022.
+          </p>
+        </div>
+      </div>
     </div>
+    <script src="index.js"></script>
   </body>
 </html>

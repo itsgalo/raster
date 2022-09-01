@@ -1,0 +1,64 @@
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+@font-face {
+  font-family: 'ModernDOS8x16';
+  src: url('ModernDOS8x16.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #111;
+  font-family: 'ModernDOS8x16', monospace;
+  color: #ff0000;
+}
+html {
+  flex-direction: column;
+}
+body {
+  width: 100vw;
+  height: 100vh;
+  flex-direction: row;
+  overflow: hidden;
+  touch-action: none;
+  position: relative;
+}
+canvas {
+  padding: 0;
+  margin: auto;
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+button {
+  background-color: Transparent; /* Green */
+  border: none;
+  display: none;
+  color: white;
+  padding: 0px 15px;
+  text-align: center;
+  margin: 0 auto;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 2rem;
+  font-weight: bold;
+  font-family: 'Arial', sans-serif;
+  outline: none;
+}
+select {
+  display: block;
+  margin: 50px;
+}
