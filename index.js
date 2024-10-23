@@ -4,7 +4,7 @@
 let tkData;
 
 async function fetchProject() {
-  const response = await fetch('https://api.thegraph.com/subgraphs/name/artblocks/art-blocks', {
+  const response = await fetch('https://gateway-arbitrum.network.thegraph.com/api/7287862b47084102dc545bdcb84b3b20/subgraphs/id/6bR1oVsRUUs6czNiB6W7NNenTXtVfNd5iSiwvS4QbRPB', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
